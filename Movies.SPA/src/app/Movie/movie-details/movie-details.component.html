@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-2 col-md-6 col-md-offset-0">
+      <carousel>
+        <slide *ngFor="let img of movie.photos;let i = index">
+          <img src="{{ movie.photos[i].url }}" alt="image" class="img-responsive">
+        </slide>
+      </carousel>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-5" style="margin-left:10px">
+        <div class="embed-responsive embed-responsive-4by3">
+            <iframe [src]="trailer | safe" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+        </div>
+      <div class="text-center">
+        <h2>{{ movie.name }}
+          <span (click)="addToFavorites()" *ngIf="!favoriteMovie && loggedIn && !admin">
+            <i class="far fa-star favorite"></i>
+          </span>
+          <span (click)="removeFromFavorites()" *ngIf="favoriteMovie && loggedIn && !admin">
+              <i class="fas fa-star favorite" ></i>
+          </span>
+        </h2>
+
+        <rating [max]="10" [readonly]="true" [(ngModel)]="movie.rating" style="font-size:1.4em;color:rgb(0, 110, 255)"></rating>
+        <p class="text-lead  text-center">
+          {{ movieInfo?.Plot}}
+        </p>
+        <hr>
+        <p class="text-lead  text-center">
+          Actors: {{ movieInfo?.Actors}}
+        </p>
+        <p class="text-lead  text-center">
+          Duration: {{ movieInfo?.Runtime}}
+        </p>
+        Price: {{ movie.price }}
+        <i class="fa fa-dollar-sign"></i>
+        <button class="btn btn-success btn-sm" (click)="buyMovie()" [ngStyle]="{display : !loggedIn || admin || movie.inCart ? 'none' : 'inline-block'}">Buy
+          <i class="fa fa-shopping-cart"></i>
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="removeFromCart()" [ngStyle]="{display : !loggedIn || admin || !movie.inCart? 'none' : 'inline-block'}">Remove
+          <i class="fas fa-trash-alt"></i>
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

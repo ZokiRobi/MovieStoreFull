@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <table class="table table-striped" *ngIf="movies?.length else alt">
+        <tr>
+          <th>Movie Name</th>
+          <th>Genre</th>
+          <th >Release Date</th>
+          <th>Price</th>
+        </tr>
+        <tr *ngFor="let movie of movies">
+          <td>{{ movie.name }}</td>
+          <td>{{ movie.genre }}</td>
+          <td>{{ movie.yearOfRelease }}</td>
+          <td>{{ movie.price }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="removeFromCart(movie.id)">Remove From cart</button>
+          </td>
+        </tr>
+        <tr>
+          <a (click)="checkout.show()" class="btn btn-success">Checkout</a>
+        </tr>
+      </table>
+      <ng-template #alt>There are no movies in cart.</ng-template>
+    </div>
+  </div>
+  <div bsModal #checkout="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Enter shipping details</h4>
+          <button type="button" class="close pull-right" (click)="checkout.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #orderForm="ngForm" (ngSubmit)="order()">
+            <div class="form-group">
+              <input type="text" placeholder="Firt Name" class="form-control" name="firstName" required [(ngModel)]="orderModel.firstName">
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Last Name" class="form-control" name="lastName" required [(ngModel)]="orderModel.lastName" >
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Address" class="form-control" name="address" required [(ngModel)]="orderModel.address">
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="City" class="form-control" name="city" required [(ngModel)]="orderModel.city">
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Phone" class="form-control" name="phone" required [(ngModel)]="orderModel.phone">
+            </div>
+            <button type="submit" class="btn btn-success" [disabled]="!orderForm.valid" (click)="checkout.hide()">Order</button>
+            <button type="button" class="btn btn-warning" (click)="checkout.hide();orderForm.reset()">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

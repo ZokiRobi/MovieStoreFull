@@ -1,0 +1,72 @@
+  <div class="col-md-6 col md-offset-3">
+    <form [formGroup]="addMovieForm" (submit)="upload();addMovieForm.reset()">
+      <div class="form-group" [ngClass]="{'has-error': addMovieForm.get('name')?.errors && addMovieForm.get('name')?.touched}">
+        <label for="moviename">Name:</label>
+        <input type="text" placeholder="Movie name" class="form-control" name="moviename" formControlName="name">
+        <span class="help-block" *ngIf="addMovieForm.get('name')?.hasError('required') && addMovieForm.get('name')?.touched">
+          Movie name is required
+        </span>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': addMovieForm.get('genre')?.errors && addMovieForm.get('genre')?.touched}">
+        <label for="genre">Genre:</label>
+        <ng-select [items]="genres" name="genre" placeholder="Select Genre" formControlName="genre" class="custom"></ng-select>
+        <span class="help-block" *ngIf="addMovieForm.get('genre')?.hasError('required') && addMovieForm.get('genre')?.touched">
+          Genre is required
+        </span>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': addMovieForm.get('yearofrelease')?.errors && addMovieForm.get('yearofrelease')?.touched}">
+        <label for="yearofrelease">Release Date:</label>
+        <select formControlName="yearofrelease" name="yearofrelease" class="form-control" style="width:100px">
+          <option *ngFor="let year of years; let i = index" value="{{years[i]}}"> {{years[i] }}</option>
+        </select>
+        <span class="help-block" *ngIf="addMovieForm.get('yearofrelease')?.hasError('required') && addMovieForm.get('yearofrelease')?.touched">
+          Release date is required
+        </span>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': addMovieForm.get('rating')?.errors && addMovieForm.get('rating')?.touched}">
+        <label for="rating">Rating:</label>
+        <rating formControlName="rating" [max]="10" style="font-size:2em"></rating>
+        <span class="help-block" *ngIf="addMovieForm.get('rating')?.hasError('required') && addMovieForm.get('rating')?.touched">
+          Rating is required
+        </span>
+      </div>
+      <div class="form-group">
+        <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+          class="well my-drop-zone">
+          Drop Photos Here
+          <br>
+          <input type="file" ng2FileSelect [uploader]="uploader" [disabled]="uploader?.queue?.length" />
+          <div *ngIf="uploader?.queue?.length">
+            <div>
+              <div>
+                <tbody>
+                  <tr *ngFor="let item of uploader.queue">
+                    <td>
+                      <strong>{{ item?.file?.name }}</strong>
+                    </td>
+                  </tr>
+                </tbody>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Remove
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': addMovieForm.get('price')?.errors && addMovieForm.get('price')?.touched}">
+        <label for="genre">Price:</label>
+        <input type="text" formControlName="price" name="price" class="form-control" style="width:100px">
+        <span class="help-block" *ngIf="addMovieForm.get('price')?.hasError('required') && addMovieForm.get('price')?.touched">
+          Price is required
+        </span>
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!addMovieForm.valid">Add movie</button>
+      <button type="button" class="btn btn-warning" (click)="addMovieForm.reset({yearofrelease:2018});cancelAdding()">Cancel</button>
+    </form>
+  </div>

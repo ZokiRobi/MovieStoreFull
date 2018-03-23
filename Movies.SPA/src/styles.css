@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+ng-select.custom > div > ul {
+  background-color: white !important;
+}
+.ajs-button {
+  color:black;
+}

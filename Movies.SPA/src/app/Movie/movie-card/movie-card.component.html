@@ -1,0 +1,36 @@
+<div class="panel panel-default">
+  <div class="panel-body text-center">
+    <div class="panel-image">
+      <a [routerLink]="['/details', movie.id]" routerLinkActive="router-link-active">
+        <img src="{{ movie.photoUrl ? movie.photoUrl : '../../../assets/img.png'}}" alt="" class="img-responsive center-block image">
+      </a>
+    </div>
+    <div class="text-center">
+      <h4 style="display:inline" class="text-primary">{{ movie.name | short}}</h4>
+
+      <small>
+        <b>{{ movie.yearOfRelease}}</b>
+      </small>
+
+      <p>{{ movie.genre }}</p>
+    </div>
+    <div>
+      <rating [max]="10" [readonly]="true" [(ngModel)]="movie.rating" style="font-size:1.3em;color:rgb(0, 110, 255)"></rating>
+    </div>
+    <div class="buttons">
+      Price: {{ movie.price }}
+      <i class="fa fa-dollar-sign"></i>
+      <button class="btn btn-success btn-sm" (click)="buyMovie(movie)" [disabled]="movie.inCart " [ngStyle]="{display : !loggedIn || admin ? 'none' : 'inline-block'}">Buy
+        <i class="fa fa-shopping-cart"></i>
+      </button>
+    </div>
+    <div class="panel-footer actions" [ngStyle]="{display : !admin ? 'none' : 'block'}">
+      <a [routerLink]="['/edit/', movie.id]" routerLinkActive="router-link-active">
+        <i class="fa fa-edit"></i>
+      </a>
+      <a (click)="deleteMovie(movie.id)">
+        <i class="fa fa-trash"></i>
+      </a>
+    </div>
+  </div>
+</div>

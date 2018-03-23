@@ -1,0 +1,6 @@
+.center{
+    padding-left: 17%;
+}
+div.item.active{
+    overflow: hidden;
+}

@@ -1,0 +1,26 @@
+<div class="container">
+  <h1 *ngIf="favoriteMovies?.length else empty">Your Favorite Movies</h1>
+  <div class="panel panel-default" *ngFor="let movie of favoriteMovies">
+    <div class="panel-body text-center">
+      <div class="panel-image">
+        <a [routerLink]="['/details',movie.id]" routerLinkActive="router-link-active" >
+          <img src="{{ movie.photoUrl ? movie.photoUrl : '../../../assets/img.png'}}" alt="" class="img-responsive center-block image">
+        </a>
+      </div>
+      <div class="text-center">
+        <h4 style="display:inline" class="text-primary">{{ movie.name | short}}</h4>
+        <small>
+          <b>{{ movie.yearOfRelease}}</b>
+        </small>
+
+        <p>{{ movie.genre }}</p>
+      </div>
+      <div>
+        <rating [max]="10" [readonly]="true" [(ngModel)]="movie.rating" style="font-size:1.3em;color:rgb(0, 110, 255)"></rating>
+      </div>
+      <a (click)="removeFromFavorites(movie.id)">
+          <i class="fas fa-ban"></i>
+        </a>
+    </div>
+  </div>
+  <ng-template #empty><h1>You have no favorites</h1></ng-template>

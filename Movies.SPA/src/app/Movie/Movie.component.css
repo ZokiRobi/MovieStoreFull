@@ -1,0 +1,14 @@
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
+.form-control{
+    font-size: 21px;
+    padding: 4px 5px;
+}
+label{
+    margin-right: 4px;
+    font-size: 1.3em;
+}
+div.form-group{
+    margin-right: 5px;
+}

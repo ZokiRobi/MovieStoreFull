@@ -1,0 +1,45 @@
+a{
+    text-decoration: none;
+}
+ul  {
+    list-style: none;
+}
+.panel-image {
+    height: 270px;
+    overflow: hidden;
+    position: relative;
+  }
+  .panel-image{
+    width: 100%;
+    height: 100%;
+  }
+  .image{
+      height: 300px
+  }
+  
+  .panel.panel-default {
+    width: 240px;
+    height: auto;
+    display: inline-block;
+    margin: 4px;
+  }
+  div.panel-body {
+    width: 240px;
+    height: 150%;
+  }
+  .buttons {
+    margin-top: 5px;
+    position: relative;
+    left: 15px;
+  }
+  .actions {
+    margin-top: 2px;
+    font-size: 1.3em;
+  }
+  h4.text-primary {
+    margin-right: 5px;
+  }
+  
+  .svg-inline--fa.fa-ban.fa-w-16{
+    cursor:pointer;
+  }

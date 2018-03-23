@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="MoviesAPI20180322101131" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^F:\\Projekat\\Movies\.API\\obj\\Release\\netcoreapp2\.0\\PubTmp\\Out\\$" />
+  </parameter>
+  <parameter name="Movies.API.Data.MoviesContext" description="" value="Data Source=tcp:moviesapi20180322101131dbserver.database.windows.net,1433;Initial Catalog=MovieStore;User Id=zoki@moviesapi20180322101131dbserver;Password=Flatron1~" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^F:\\Projekat\\Movies\.API\\obj\\Release\\netcoreapp2\.0\\PubTmp\\EFSQLScripts\\Movies\.API\.Data\.MoviesContext\.sql$" />
+  </parameter>
+</parameters>

@@ -1,0 +1,14 @@
+ngx-image-gallery {
+  height: 800px;
+}
+
+.svg-inline--fa.fa-w-18.favorite{
+  background-color: #222222;
+  color: yellow;
+  cursor:pointer;
+}
+
+img.img-responsive{
+  width: 100%;
+  max-height: 555px;
+}

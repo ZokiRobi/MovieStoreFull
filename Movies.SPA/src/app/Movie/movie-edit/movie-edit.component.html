@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-md-4 col-md-offset-1 col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1">
+
+    <form [formGroup]="editMovieForm" (submit)="upload();editMovieForm.reset()">
+      <div class="form-group" [ngClass]="{'has-error': editMovieForm.get('name')?.errors && editMovieForm.get('name')?.touched}">
+        <label for="moviename">Name:</label>
+        <input type="text" placeholder="Movie name" class="form-control" name="moviename" formControlName="name">
+        <span class="help-block" *ngIf="editMovieForm.get('name')?.hasError('required') && editMovieForm.get('name')?.touched">
+          Movie name is required
+        </span>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': editMovieForm.get('genre')?.errors && editMovieForm.get('genre')?.touched}">
+        <label for="genre">Genre:</label>
+        <ng-select [items]="genres"  placeholder="Select Genre" formControlName="genre" [ngStyle]="styles" #select class="custom"></ng-select>
+        <span class="help-block" *ngIf="editMovieForm.get('genre')?.hasError('required') && editMovieForm.get('genre')?.touched">
+          Genre is required
+        </span>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': editMovieForm.get('yearofrelease')?.errors && editMovieForm.get('yearofrelease')?.touched}">
+        <label for="yearofrelease">Release Date:</label>
+        <select formControlName="yearofrelease" name="yearofrelease" class="form-control" style="width:100px">
+          <option *ngFor="let year of years; let i = index" value="{{years[i]}}"> {{years[i] }}</option>
+        </select>
+        <span class="help-block" *ngIf="editMovieForm.get('yearofrelease')?.hasError('required') && editMovieForm.get('yearofrelease')?.touched">
+          Release date is required
+        </span>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': editMovieForm.get('rating')?.errors && editMovieForm.get('rating')?.touched}">
+        <label for="rating">Rating:</label>
+        <rating formControlName="rating" [max]="10" style="font-size:2em"></rating>
+        <span class="help-block" *ngIf="editMovieForm.get('rating')?.hasError('required') && editMovieForm.get('rating')?.touched">
+          Rating is required
+        </span>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error': editMovieForm.get('price')?.errors && editMovieForm.get('price')?.touched}">
+        <label for="genre">Price:</label>
+        <input type="text" formControlName="price" name="price" class="form-control" style="width:100px">
+        <span class="help-block" *ngIf="editMovieForm.get('price')?.hasError('required') && editMovieForm.get('price')?.touched">
+          Price is required
+        </span>
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!editMovieForm.valid || editMovieForm.pristine">Edit movie</button>
+      <button type="button" class="btn btn-warning" (click)="goBack()">Cancel</button>
+    </form>
+  </div>
+  <div class="col-md-5 col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-body text-center">
+        <carousel [interval]="0" [showIndicators]="false">
+          <slide *ngFor="let img of movie.photos;let i = index">
+            <img src="{{ movie.photos[i].url }}" alt="image" style="display:inline-block;width:80%">
+            <div class="carousel-caption d-none d-md-block">
+                <button class="btn btn-danger btn-sm" [disabled]="movie.photos[i].isMain" (click)="deletePhoto(movie.photos[i].id)"><i class="fa fa-trash"></i></button>
+                <button class="btn btn-success btn-sm" (click)="setMain(movie.id,movie.photos[i].id)" [disabled]="movie.photos[i].isMain"><i class="fa fa-home"></i></button>
+            </div>
+          </slide>
+        </carousel>
+        <div class="text-center">
+          <h4>{{ movie.name }}</h4>
+        </div>
+        <div class="text-center">
+          <h5>{{ movie.genre }}</h5>
+        </div>
+        <div>
+          <rating [max]="10" [readonly]="true" [(ngModel)]="movie.rating" style="font-size:1.4em;color:rgb(0, 110, 255)"></rating>
+        </div>
+        <div class="buttons">
+          <i class="fa fa-dollar-sign"></i> {{ movie.price }}
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Add Photos </label>
+      <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+        class="well my-drop-zone">
+        Drop Photos Here
+        <br>
+        <input type="file" ng2FileSelect [uploader]="uploader" [disabled]="uploader?.queue?.length" />
+        <div *ngIf="uploader?.queue?.length">
+          <div>
+            <div>
+              <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                  <td>
+                    <strong>{{ item?.file?.name }}</strong>
+                  </td>
+                </tr>
+              </tbody>
+              <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.queue.length">
+              <span class="glyphicon glyphicon-upload"></span> Upload
+            </button>
+            <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+              <span class="glyphicon glyphicon-trash"></span> Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
